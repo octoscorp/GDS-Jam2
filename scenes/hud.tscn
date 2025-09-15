@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://i8kxqxd1vr4a"]
+
+[ext_resource type="FontFile" uid="uid://k5pg2ufuduyu" path="res://media/fonts/m5x7.ttf" id="1_ahhtf"]
+[ext_resource type="Script" uid="uid://dqofgqeg8fhrp" path="res://scripts/hud.gd" id="1_oo0fn"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oo0fn")
+
+[node name="Luck" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -35.0
+offset_bottom = 23.0
+grow_horizontal = 0
+
+[node name="Icon" type="TextureRect" parent="Luck"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -15.0
+offset_bottom = 23.0
+grow_horizontal = 0
+
+[node name="Text" type="RichTextLabel" parent="Luck"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("1_ahhtf")
+theme_override_font_sizes/normal_font_size = 32
+text = "00"
+scroll_active = false
+
+[node name="BG" type="TextureRect" parent="Luck"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
