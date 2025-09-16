@@ -26,23 +26,30 @@ const icons = {
 	ID.PLAYER_SPEED_10: _icon_array["BOOT"],
 }
 
+# information signals
+signal card_activation_changed(id: Card.ID, active: bool)
+
+# control signals
 signal player_speed_modified(percentage_increase)
 
 @export var card_id = ID.PLAYER_SPEED_10
 
 var lower_bound: int
 var upper_bound: int
+var is_active: bool = false
 
 func _ready():
 	var range = chances[card_id]
 	lower_bound = randi() % (100 - range)
 	upper_bound = lower_bound + range
 
-func activate():
-	_apply_effect(false)
-
-func deactivate():
-	_apply_effect(true)
+func activate(current_luck: int):
+	var in_range = (current_luck >= lower_bound && current_luck < upper_bound)
+	# XOR
+	if is_active ^ in_range:
+		_apply_effect(is_active)
+		is_active = not is_active
+		card_activation_changed.emit(card_id, is_active)
 
 func mult_value(value: int, invert: bool):
 	return (1 / value) if invert else value
