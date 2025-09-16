@@ -1,5 +1,7 @@
 extends Node2D
 
+signal luck_value_changed
+
 const LUCK_MAX = 99
 
 var luck_value = 0
@@ -13,3 +15,7 @@ func reroll_luck_value():
 
 func _on_luck_reroll_timer_timeout() -> void:
 	reroll_luck_value()
+
+func _on_luck_value_changed() -> void:
+	# All abilities are configured upon this change
+	pass # Replace with function body.

@@ -44,5 +44,6 @@ autostart = true
 wait_time = 10.0
 autostart = true
 
+[connection signal="luck_value_changed" from="." to="." method="_on_luck_value_changed"]
 [connection signal="timeout" from="PlayerCamera/SpawningPath/Timer" to="PlayerCamera/SpawningPath" method="_on_timer_timeout"]
 [connection signal="timeout" from="LuckRerollTimer" to="." method="_on_luck_reroll_timer_timeout"]

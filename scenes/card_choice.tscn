@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4full6gm0w46"]
+
+[ext_resource type="PackedScene" uid="uid://k7a3mxdxoxqj" path="res://scenes/card_option.tscn" id="1_8uqop"]
+
+[node name="CardChoice" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 140.0
+offset_top = 80.0
+offset_right = -140.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 230.0
+offset_top = 180.0
+offset_right = -230.0
+offset_bottom = -180.0
+alignment = 1
+
+[node name="CardOption1" parent="HBoxContainer" instance=ExtResource("1_8uqop")]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="CardOption2" parent="HBoxContainer" instance=ExtResource("1_8uqop")]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="CardOption3" parent="HBoxContainer" instance=ExtResource("1_8uqop")]
+layout_mode = 2
+size_flags_horizontal = 10
