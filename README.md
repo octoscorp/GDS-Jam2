@@ -5,6 +5,8 @@ Not going to be nicely formatted during the Jam. Deal.
 cactus. Only moves when offscreen.
 sound-based - radiating outwards from it in an arc
 fire-themed - leaves a damaging trail behind
+hawk - swoops past, then returns
+speeeeeeeeeedy boi
 
 numerous ranged types required:
 - Charge time
@@ -14,7 +16,12 @@ numerous ranged types required:
 - Reload counter?
 
 ### Setting
-Desert?
+Desert
+
+### Scope creep
+- Individual music tracks per enemy, each one on-screen contributes a "vote" to the volume of their specific track?
+  - Could be made lower-effort by instead having the track present if more than 0 enemies of that type present
+  - These would need to be synced up, which will definitely require effort
 
 ## Music
 #### The Moon is Made of Cheese
