@@ -1,7 +1,23 @@
 Not going to be nicely formatted during the Jam. Deal.
 
+## Ideas
+### Enemies
+cactus. Only moves when offscreen.
+sound-based - radiating outwards from it in an arc
+fire-themed - leaves a damaging trail behind
+
+numerous ranged types required:
+- Charge time
+- Projectile speed
+- Projectile accuracy
+- Fire rate
+- Reload counter?
+
+### Setting
+Desert?
+
 ## Music
-### The Moon is Made of Cheese
+#### The Moon is Made of Cheese
 WIP (nice unused instrument)
 https://www.beepbox.co/#9n31s7k9l04e0bt22a7g0fj07r1i0o432T0v1u00f30j61662n8q010d07w5h5E0T1v1u01f0qo1411d23AcF4B5Q2600Pdc00E21174T1v1u17f0q00d03A1F0B0Q200ePb793E3617628637T2v4u15f10w4qw02d03w0E0b4h4h4h4h4h4h4i4h4h4h4h4h4h4h4h4h4h4h4h4h4h4p21s0aq_hgk0CzUF8QOZyQyQyVh7IYB0SAs58Rn4uWbkbiaCFX5UU2CLQiqfmwcHaGx9baN6OCE1jakd6wQrhqj5Eaq1q1g0
 Three instruments:
