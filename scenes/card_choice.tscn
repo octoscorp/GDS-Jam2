@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d4full6gm0w46"]
+[gd_scene load_steps=3 format=3 uid="uid://d4full6gm0w46"]
 
 [ext_resource type="PackedScene" uid="uid://k7a3mxdxoxqj" path="res://scenes/card_option.tscn" id="1_8uqop"]
+[ext_resource type="Script" uid="uid://cogub1y3liynh" path="res://scripts/card_choice.gd" id="1_ng52u"]
 
 [node name="CardChoice" type="Control"]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_ng52u")
 
 [node name="Background" type="TextureRect" parent="."]
 z_index = -1

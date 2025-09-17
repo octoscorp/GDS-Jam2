@@ -46,7 +46,7 @@ numerous ranged types required:
 - Reload counter?
 
 ### Setting
-Desert
+Desert (near area 51 - good excuse for wacky enemy combinations)
 
 ### Scope creep
 - Individual music tracks per enemy, each one on-screen contributes a "vote" to the volume of their specific track?
