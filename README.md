@@ -19,7 +19,7 @@ Autoload Luck value, seed Card choices (any other RNG worth seeding?) from curre
 See card.gd changes
 
 ### Enemies
-- Cactus - only moves when offscreen
+- Cactus - only moves when offscreen (or within small radius of player? - could pretend to be part of the background, then take a swing. Credit Conor (conversation re faceless cactus) for inspiration)
 - At least 1 ranged type
 
 ### Card choice criteria
@@ -30,6 +30,31 @@ Actually making them apply.
 
 #### UI
 Lower priority than the activation itself, but the player should know which cards are active at a given time.
+
+### MVP
+#### Web testing - Friday
+I have no way to test the web export on a PC other than mine from Friday night onwards. Ideally would have bones of game done by Friday morning:
+- Cactus, Zombie, Alien enemies
+- Card choice mechanism, including trigger for it (enemy drops item)
+- Card application for speed,
+- Player shooting enemies
+- Sounds for all of the above
+  - Also "Talking" sound for the tutorial
+  - Alien shooting sound
+  - Menu sounds
+
+#### Full MVP
+- Card choice using luck value
+- Aliens shooting
+- Pause menu (volumes, current card display, resolution?)
+- Score system (per-instance, for the moment)
+- Currently active display
+
+#### Stretch Goals for Jam
+- Card icons all distinct
+- Art consistency update
+- Enemies animated
+- Balance negative cards, goal being to make very difficult with all cards purchased
 
 ## Ideas
 ### Enemies
@@ -71,3 +96,8 @@ https://www.beepbox.co/#9n21s7k9l00e0nt24a7g0nj07r1i0o43T0v1u00f10n9q802d03w5h0E
 
 ## Credits
 See ./scripts/credits.gd
+
+## Devlog Ideas
+This is why every other thought has ended up in the git history.
+- Made cactus sprite before work, clearly wasn't yet awake as I forgot to give it a face.
+- Zombie was originally going to be the PC, couldn't make the hands work
