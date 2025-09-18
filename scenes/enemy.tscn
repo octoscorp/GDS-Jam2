@@ -7,13 +7,13 @@
 radius = 11.0
 height = 32.0
 
-[node name="Enemy" type="Node2D"]
+[node name="Enemy" type="Area2D" groups=["hurts_player", "player_targets"]]
 script = ExtResource("1_md0e3")
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_md0e3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_7p1mj")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

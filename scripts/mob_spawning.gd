@@ -2,7 +2,7 @@ extends Path2D
 
 const PROBABILITY_CHANGE = 0.1
 const ENEMIES_BY_DIFFICULTY = [
-	preload("res://scenes/enemy.tscn"),
+	preload("res://scenes/cactus.tscn"),
 ]
 
 var probabilities = Array([], TYPE_FLOAT, "", null)

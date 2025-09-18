@@ -1,8 +1,10 @@
-extends Node2D
+extends Area2D
 
 @export var ENEMY_MVMT_SPEED = 20
 ## How quickly the enemy changes targets following player movement
 @export var ENEMY_REACTION_SPEED = 0.06
+
+@export var health = 20
 
 var target = null
 var targeted_position = Vector2(0, 0)
@@ -24,3 +26,23 @@ func _physics_process(delta: float) -> void:
 
 	# WARNING: May need to round to INT
 	global_position += (targeted_position - global_position).normalized() * ENEMY_MVMT_SPEED * delta
+
+func contains(area: Area2D):
+	return (area == $".")
+
+func destroy():
+	# TODO: Play animation first
+	self.queue_free()
+
+func take_damage():
+	self.health -= 10
+	if self.health <= 0:
+		self.destroy()
+	else:
+		self.modulate = Color(1, 0, 0, 0.27)
+		await get_tree().create_timer(0.1).timeout
+		self.modulate = Color(1, 1, 1, 1)
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("hurts_enemy"):
+		take_damage()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dw3dl3w20jerv"]
+[gd_scene load_steps=5 format=3 uid="uid://dw3dl3w20jerv"]
 
 [ext_resource type="Texture2D" uid="uid://dyk2k6f50xn6n" path="res://media/icon.svg" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://bhd1fdthfwhap" path="res://scripts/player.gd" id="1_g2els"]
@@ -6,14 +6,29 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
 size = Vector2(32, 32)
 
-[node name="Player" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
+radius = 100.0
+
+[node name="Player" type="Area2D" groups=["enemy_target"]]
 script = ExtResource("1_g2els")
 
-[node name="Sprite2D" type="Sprite2D" parent="." groups=["enemy_target"]]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_3vyb7")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_g2els")
+
+[node name="Range" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Circle" type="CollisionShape2D" parent="Range"]
+shape = SubResource("CircleShape2D_g2els")
+
+[node name="ShotTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="Range" to="." method="_on_range_area_entered"]
+[connection signal="area_exited" from="Range" to="." method="_on_range_area_exited"]
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
