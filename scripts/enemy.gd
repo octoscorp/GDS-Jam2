@@ -1,5 +1,7 @@
 extends Area2D
 
+signal enemy_died(death_location: Vector2)
+
 @export var ENEMY_MVMT_SPEED = 20
 ## How quickly the enemy changes targets following player movement
 @export var ENEMY_REACTION_SPEED = 0.06
@@ -32,6 +34,8 @@ func contains(area: Area2D):
 
 func destroy():
 	# TODO: Play animation first
+	# TODO: make receiver create chest if needed
+	enemy_died.emit(position)
 	self.queue_free()
 
 func take_damage():
@@ -39,6 +43,7 @@ func take_damage():
 	if self.health <= 0:
 		self.destroy()
 	else:
+		# TODO: animation player being added anyway, animate this
 		self.modulate = Color(1, 0, 0, 0.27)
 		await get_tree().create_timer(0.1).timeout
 		self.modulate = Color(1, 1, 1, 1)
