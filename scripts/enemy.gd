@@ -34,7 +34,6 @@ func contains(area: Area2D):
 
 func destroy():
 	# TODO: Play animation first
-	# TODO: make receiver create chest if needed
 	enemy_died.emit(position)
 	self.queue_free()
 

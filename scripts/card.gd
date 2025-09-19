@@ -48,6 +48,14 @@ enum ID {
 	ENEMY_TARGETS_ENEMY,	# Possibly OP
 }
 
+# 1 if not specified
+const allowed_count = {
+	ID.PLAYER_PROJECTILE_SPEED_10: 2,
+	ID.PLAYER_PROJECTILE_SPEED_10_NEGATIVE: 3,
+	ID.ENEMY_PROJECTILE_SPEED_10: 2,
+	ID.ENEMY_PROJECTILE_SPEED_10_NEGATIVE: 3,
+}
+
 # Percentage chance that a given luck value falls within the bounds
 const chances = {
 	# Player-affecting
@@ -213,7 +221,27 @@ var lower_bound: int
 var upper_bound: int
 var is_active: bool = false
 
-func _ready():
+static func get_random_card_id():
+	return randi() % ID.size()
+
+static func no_more_allowed(card_id):
+	# TODO: count nodes in group
+	var count_in_play = 0
+	var allowed = 1
+	if card_id in allowed_count.keys():
+		allowed = allowed_count[card_id]
+	if count_in_play < allowed:
+		return false
+	return true
+
+static func create_from_id(card_id: Card.ID):
+	var output = preload("res://scenes/cards/card.tscn").instantiate()
+	output.card_id = card_id
+	output.prepare()
+	# it helps if you make it return. Code at normal hours, folks
+	return output
+
+func prepare():
 	var range = chances[card_id]
 	lower_bound = randi() % (100 - range)
 	upper_bound = lower_bound + range

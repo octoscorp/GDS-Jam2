@@ -9,7 +9,7 @@ size = Vector2(32, 32)
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
 radius = 100.0
 
-[node name="Player" type="Area2D" groups=["enemy_target"]]
+[node name="Player" type="Area2D" groups=["enemy_target", "is_player", "triggers_chest"]]
 script = ExtResource("1_g2els")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
