@@ -3,7 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://k7a3mxdxoxqj" path="res://scenes/card_option.tscn" id="1_8uqop"]
 [ext_resource type="Script" uid="uid://cogub1y3liynh" path="res://scripts/card_choice.gd" id="1_ng52u"]
 
-[node name="CardChoice" type="Control"]
+[node name="CardChoice" type="Control" groups=["is_card_choice"]]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,3 +48,7 @@ size_flags_horizontal = 6
 [node name="CardOption3" parent="HBoxContainer" instance=ExtResource("1_8uqop")]
 layout_mode = 2
 size_flags_horizontal = 10
+
+[connection signal="card_option_selected" from="HBoxContainer/CardOption1" to="." method="_on_card_option_card_option_selected" binds= [0]]
+[connection signal="card_option_selected" from="HBoxContainer/CardOption2" to="." method="_on_card_option_card_option_selected" binds= [1]]
+[connection signal="card_option_selected" from="HBoxContainer/CardOption3" to="." method="_on_card_option_card_option_selected" binds= [2]]

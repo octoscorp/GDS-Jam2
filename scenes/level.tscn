@@ -11,7 +11,7 @@ _data = {
 }
 point_count = 5
 
-[node name="Level" type="Node2D"]
+[node name="Level" type="Node2D" groups=["is_level"]]
 script = ExtResource("1_mx8sn")
 
 [node name="Player" parent="." instance=ExtResource("1_w7c3h")]

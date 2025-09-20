@@ -11,5 +11,5 @@ func _on_area_entered(area: Area2D) -> void:
 		return
 	# TODO: Pickup animation
 	var choice = CARD_CHOICE.instantiate()
-	get_tree().root.call_deferred("add_child", choice)
+	get_tree().get_first_node_in_group("HUD_Root").call_deferred("add_child", choice)
 	self.call_deferred("queue_free")

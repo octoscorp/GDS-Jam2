@@ -26,9 +26,6 @@ func fire_at(target: Area2D):
 func _on_area_entered(area: Area2D) -> void:
 	if self.fired_from.contains(area):
 		return
-	print(area.to_string())
-	print(self.fired_from.to_string())
-	print()
 	pierce -= 1
 	if pierce < 0:
 		self.queue_free()
