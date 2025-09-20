@@ -150,17 +150,17 @@ const descriptions = {
 }
 
 const _icon_array = {
-	"BLOOD": "res://media/blood.png",
-	"BOOT": "res://media/boot.png",
-	"BOUNCE": "res://media/bounce.png",
-	"BULLET": "res://media/bullet.png",
-	"CRIT": "res://media/crit.png",
-	"FIRE_RATE": "res://media/fire_rate.png",
-	"HOMING": "res://media/HOMING.png",
-	"PIERCE": "res://media/pierce.png",
-	"PROJ_SPEED": "res://media/proj_speed.png",
-	"SHIELD": "res://media/shield.png",
-	"TARGET": "res://media/target.png",
+	"BLOOD": preload("res://media/icons/blood.png"),
+	"BOOT": preload("res://media/icons/boot.png"),
+	"BOUNCE": preload("res://media/icons/bounce.png"),
+	"BULLET": preload("res://media/icons/bullet.png"),
+	"CRIT": preload("res://media/icons/crit.png"),
+	"FIRE_RATE": preload("res://media/icons/fire_rate.png"),
+	"HOMING": preload("res://media/icons/homing.png"),
+	"PIERCE": preload("res://media/icons/pierce.png"),
+	"PROJ_SPEED": preload("res://media/icons/proj_speed.png"),
+	"SHIELD": preload("res://media/icons/shield.png"),
+	"TARGET": preload("res://media/icons/target.png"),
 }
 
 const icons = {
@@ -212,9 +212,6 @@ const icons = {
 # information signals
 signal card_activation_changed(id: Card.ID, active: bool)
 
-# control signals
-signal player_speed_modified(percentage_increase)
-
 @export var card_id = ID.PLAYER_SPEED_10
 
 var lower_bound: int
@@ -224,44 +221,118 @@ var is_active: bool = false
 static func get_random_card_id():
 	return randi() % ID.size()
 
-static func no_more_allowed(card_id):
+static func no_more_allowed(id_to_use):
 	# TODO: count nodes in group
 	var count_in_play = 0
 	var allowed = 1
-	if card_id in allowed_count.keys():
-		allowed = allowed_count[card_id]
+	if id_to_use in allowed_count.keys():
+		allowed = allowed_count[id_to_use]
 	if count_in_play < allowed:
 		return false
 	return true
 
-static func create_from_id(card_id: Card.ID):
+static func create_from_id(id_to_use: Card.ID):
 	var output = preload("res://scenes/cards/card.tscn").instantiate()
-	output.card_id = card_id
+	output.card_id = id_to_use
 	output.prepare()
 	# it helps if you make it return. Code at normal hours, folks
 	return output
 
 func prepare():
-	var range = chances[card_id]
-	lower_bound = randi() % (100 - range)
-	upper_bound = lower_bound + range
+	var luck_range = chances[card_id]
+	lower_bound = randi() % (100 - luck_range)
+	upper_bound = lower_bound + luck_range
 
 func activate(current_luck: int):
 	var in_range = (current_luck >= lower_bound && current_luck < upper_bound)
 	# XOR
-	if is_active ^ in_range:
+	if (not is_active and in_range) or (is_active and not in_range):
 		_apply_effect(is_active)
 		is_active = not is_active
 		card_activation_changed.emit(card_id, is_active)
 
-func mult_value(value: int, invert: bool):
+func mult_value(value: float, invert: bool):
 	return (1 / value) if invert else value
+
+func additive_value(value: float, invert: bool):
+	return (0 - value) if invert else value
 
 # Applies card effect (removes if remove is true)
 func _apply_effect(remove):
 	match card_id:
+		# Player-affecting
 		ID.PLAYER_SPEED_10:
-			# WARNING: Does not cancel to 1.
-			player_speed_modified.emit(mult_value(1.1, remove))
+			# WARNING: Does not cancel to 1 with corresponding negative
+			Glob.PLAYER_MVMT_SPEED *= mult_value(1.1, remove)
 		ID.PLAYER_SPEED_10_NEGATIVE:
-			player_speed_modified.emit(mult_value(0.9, remove))
+			Glob.PLAYER_MVMT_SPEED *= mult_value(0.9, remove)
+		ID.PLAYER_SPEED_20:
+			Glob.PLAYER_MVMT_SPEED *= mult_value(1.2, remove)
+		ID.PLAYER_SPEED_20_NEGATIVE:
+			Glob.PLAYER_MVMT_SPEED *= mult_value(0.8, remove)
+		ID.PLAYER_SPEED_30:
+			Glob.PLAYER_MVMT_SPEED *= mult_value(1.3, remove)
+		ID.PLAYER_SPEED_30_NEGATIVE:
+			Glob.PLAYER_MVMT_SPEED *= mult_value(0.7, remove)
+		ID.PLAYER_DAMAGE_IMMUNE:
+			Glob.PLAYER_IS_IMMUNE = not remove
+		ID.PLAYER_CRIT_CHANCE_10:
+			Glob.PLAYER_CRIT_CHANCE *= mult_value(1.1, remove)
+		ID.PLAYER_CRIT_CHANCE_20:
+			Glob.PLAYER_CRIT_CHANCE *= mult_value(1.2, remove)
+		ID.PLAYER_CRIT_CHANCE_30:
+			Glob.PLAYER_CRIT_CHANCE *= mult_value(1.3, remove)
+
+
+		# Enemy-affecting
+		ID.ENEMY_SPEED_10:
+			Glob.ENEMY_MVMT_SPEED *= mult_value(1.1, remove)
+		ID.ENEMY_SPEED_10_NEGATIVE:
+			Glob.ENEMY_MVMT_SPEED *= mult_value(0.9, remove)
+		ID.ENEMY_SPEED_20:
+			Glob.ENEMY_MVMT_SPEED *= mult_value(1.2, remove)
+		ID.ENEMY_SPEED_20_NEGATIVE:
+			Glob.ENEMY_MVMT_SPEED *= mult_value(0.8, remove)
+		ID.ENEMY_SPEED_30:
+			Glob.ENEMY_MVMT_SPEED *= mult_value(1.3, remove)
+		ID.ENEMY_SPEED_30_NEGATIVE:
+			Glob.ENEMY_MVMT_SPEED *= mult_value(0.7, remove)
+		ID.ENEMY_DAMAGE_IMMUNE:
+			Glob.ENEMY_IS_IMMUNE = not remove
+
+
+		# Projectiles
+		ID.PLAYER_PROJECTILE_SPEED_10:
+			Glob.PLAYER_PROJECTILE_SPEED *= mult_value(1.1, remove)
+		ID.PLAYER_PROJECTILE_SPEED_10_NEGATIVE:
+			Glob.PLAYER_PROJECTILE_SPEED *= mult_value(0.9, remove)
+		ID.PLAYER_PROJECTILE_PIERCE_1:
+			Glob.PLAYER_PROJECTILE_PIERCE += additive_value(1, remove)
+		ID.PLAYER_PROJECTILE_PIERCE_2:
+			Glob.PLAYER_PROJECTILE_PIERCE += additive_value(2, remove)
+		ID.PLAYER_PROJECTILE_PIERCE_3:
+			Glob.PLAYER_PROJECTILE_PIERCE += additive_value(3, remove)
+		ID.PLAYER_PROJECTILE_BOUNCE_1:
+			Glob.PLAYER_PROJECTILE_BOUNCE += additive_value(1, remove)
+		ID.PLAYER_PROJECTILE_HOMING:
+			Glob.PLAYER_PROJECTILE_HOMING = not remove
+
+		ID.ENEMY_PROJECTILE_SPEED_10:
+			Glob.ENEMY_PROJECTILE_SPEED *= mult_value(1.1, remove)
+		ID.ENEMY_PROJECTILE_SPEED_10_NEGATIVE:
+			Glob.ENEMY_PROJECTILE_SPEED *= mult_value(0.9, remove)
+		ID.ENEMY_PROJECTILE_PIERCE_BUT_FF:
+			Glob.ENEMY_PROJECTILE_PIERCE = not remove
+		ID.ENEMY_PROJECTILE_BOUNCE_1:
+			Glob.ENEMY_PROJECTILE_BOUNCE *= mult_value(1.1, remove)
+		ID.ENEMY_PROJECTILE_HOMING:
+			Glob.ENEMY_PROJECTILE_HOMING = not remove
+
+
+		# Targeting
+		ID.PLAYER_TARGETS_PROJECTILES:
+			Glob.PLAYER_TARGETS_PROJECTILES = not remove
+		ID.ENEMY_TARGETS_PROJECTILES:
+			Glob.ENEMY_TARGETS_PROJECTILES = not remove
+		ID.ENEMY_TARGETS_ENEMY:
+			Glob.ENEMY_TARGETS_ENEMY = not remove

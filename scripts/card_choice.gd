@@ -1,30 +1,37 @@
 extends Control
 
 signal card_choice_triggered
+signal card_choice_made
 
 var cards: Array
+var selected_card = null
 
 func _ready():
 	# I don't trust myself to prototype this efficiently
 	var thread = Thread.new()
 	thread.start(choose_3_cards)
+	selected_card = null
+	
+	var level = get_tree().get_first_node_in_group("is_level")
+	if level == null:
+		return
+	connect("card_choice_triggered", level.on_card_choice_start)
+	connect("card_choice_made", level.on_card_choice_end)
+	thread.wait_to_finish()
 
 func choose_3_cards():
 	cards = []
 	var i = 0
 	while cards.size() < 3 and i < 30:
-		print("Attempt to pull card")
 		i += 1
 		var card_id = Card.get_random_card_id()
 		if (Card.no_more_allowed(card_id)):
 			continue
-		print("Added %d" % card_id)
 		cards.append(Card.create_from_id(card_id))
 	call_deferred("display_card_options")
 
 func display_card_options():
 	# TODO: requires handling fewer available options
-	print(cards)
 	$HBoxContainer/CardOption1.set_card(cards[0])
 	$HBoxContainer/CardOption2.set_card(cards[1])
 	$HBoxContainer/CardOption3.set_card(cards[2])
@@ -33,6 +40,10 @@ func display_card_options():
 	card_choice_triggered.emit()
 	self.visible = true
 
-func _on_card_option_card_option_selected():
+func _on_card_option_card_option_selected(selected_choice: int):
 	# TODO: Add card to selected roster
-	pass
+	selected_card = cards[selected_choice]
+	card_choice_made.emit()
+
+func choice_made_callback():
+	return selected_card

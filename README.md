@@ -12,20 +12,24 @@ With optional modifiers:
 - Retro: make it old-school
 
 ## TODO
-### RNG seeding
-Autoload Luck value, seed Card choices (any other RNG worth seeding?) from current luck value.
+### Bugs
+CHEST: Picking two up at the same time seems to make the game very unhappy
 
-### Additional Card Icons
-See card.gd changes
+### Background image
+Make sure it moves, basic procgen?
+
+### Music
+
+### Sounds
+
+### RNG seeding
+Seed Card choices (any other RNG worth seeding?) from current luck value.
 
 ### Enemies
 - At least 1 ranged type
 
-### Card choice criteria
-When should a card choice be triggered? I like the idea of strategy being involved - I've got 17 luck, now would be a good time to choose a card - so should be by player interaction. Chest in the world?
-
 ### Card activation
-Actually making them apply.
+Make the defined traits actually pull from the autoload script
 
 #### UI
 Lower priority than the activation itself, but the player should know which cards are active at a given time.

@@ -9,7 +9,6 @@ const IFRAME_LENGTH = 10
 const DAMAGE_DISPLAY_LENGTH = 8
 @export var FOLLOW_DELAY = 0.25
 @export var FOLLOW_SPEED = 0.02
-@export var MVMT_SPEED = 70
 
 var bullet = preload("res://scenes/projectile.tscn")
 
@@ -53,7 +52,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("player_right"):
 		input_direction += Vector2(1, 0)
 		recv_input = true	
-	position += input_direction * MVMT_SPEED * delta
+	position += input_direction * Glob.PLAYER_MVMT_SPEED * delta
 
 	# Kick off camera movement delay if we just started moving
 	if can_start_delay == true && recv_input == true:

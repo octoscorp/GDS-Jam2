@@ -2,7 +2,7 @@ extends Area2D
 
 signal enemy_died(death_location: Vector2)
 
-@export var ENEMY_MVMT_SPEED = 20
+@export var MVMT_SPEED_MODIFIER = 1
 ## How quickly the enemy changes targets following player movement
 @export var ENEMY_REACTION_SPEED = 0.06
 
@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 	targeted_position = lerp(targeted_position, target.global_position, ENEMY_REACTION_SPEED)
 
 	# WARNING: May need to round to INT
-	global_position += (targeted_position - global_position).normalized() * ENEMY_MVMT_SPEED * delta
+	global_position += (targeted_position - global_position).normalized() * Glob.ENEMY_MVMT_SPEED * MVMT_SPEED_MODIFIER * delta
 
 func contains(area: Area2D):
 	return (area == $".")
