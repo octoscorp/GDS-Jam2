@@ -3,6 +3,7 @@ extends Area2D
 class_name Player
 
 signal pause_game
+signal player_damaged
 
 # "Constants"
 const IFRAME_LENGTH = 10
@@ -15,13 +16,15 @@ var bullet = preload("res://scenes/projectile.tscn")
 var time_since_input_start = 0.0
 var recv_input = false
 var camera = null
+var background_image = null
 var immunity_frames = 0
 var fire_rate: float
 
 var areas_in_range = []
 
 func _ready() -> void:
-	camera = get_tree().get_nodes_in_group("player_follow_camera")[0]
+	camera = get_tree().get_first_node_in_group("player_follow_camera")
+	background_image = get_tree().get_first_node_in_group("player_scrolled_background")
 	set_fire_rate(1.0)
 
 func _input(event: InputEvent) -> void:
@@ -34,7 +37,16 @@ func _physics_process(delta: float) -> void:
 	
 	# Camera movement
 	if time_since_input_start > FOLLOW_DELAY:
-		camera.position = lerp(camera.position, position, FOLLOW_SPEED)
+		camera.global_position = lerp(camera.position, position, FOLLOW_SPEED)
+		var difference = (camera.global_position - background_image.global_position) - Vector2(960, 540)
+		if difference.x >= 640:
+			background_image.global_position += Vector2(640, 0)
+		elif difference.x <= -640:
+			background_image.global_position += Vector2(-640, 0)
+		if difference.y >= 360:
+			background_image.global_position += Vector2(0, 360)
+		elif difference.y <= -360:
+			background_image.global_position += Vector2(0, -360)
 	else:
 		time_since_input_start += delta
 	
@@ -70,6 +82,7 @@ func contains(area: Area2D):
 func take_damage():
 	immunity_frames = IFRAME_LENGTH
 	self.modulate = Color(1, 0, 0, 0.27)
+	player_damaged.emit()
 
 # For use in duck typing (has_method)
 func is_a_player():
@@ -84,6 +97,12 @@ func _shoot(target: Area2D):
 	var shot = bullet.instantiate()
 	shot.fired_from = self
 	shot.global_position = self.global_position
+	if Glob.ENEMY_TARGETS_PROJECTILES:
+		shot.add_to_group("enemy_targets")
+	if Glob.PLAYER_TARGETS_PROJECTILES:
+		shot.add_to_group("player_targets")
+	shot.pierce = Glob.PLAYER_PROJECTILE_PIERCE
+	shot.MVMT_SPEED = Glob.PLAYER_PROJECTILE_SPEED
 	get_tree().root.add_child(shot)
 	shot.fire_at(target)
 
@@ -105,7 +124,7 @@ func set_fire_rate(new_rate: float):
 	$ShotTimer.wait_time = 1.0 / fire_rate
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.is_in_group("hurts_player"):
+	if area.is_in_group("hurts_player") and not Glob.PLAYER_IS_IMMUNE:
 		take_damage()
 
 func _on_range_area_entered(area: Area2D) -> void:

@@ -1,6 +1,6 @@
 extends Area2D
 
-const PROJ_MVMT_SPEED = 40
+var MVMT_SPEED = 40
 
 var fired_from = null
 var actual_position: Vector2
@@ -13,7 +13,7 @@ func _ready():
 	self.actual_position = self.global_position
 
 func _physics_process(delta: float) -> void:
-	actual_position += PROJ_MVMT_SPEED * delta * movement_direction
+	actual_position += MVMT_SPEED * delta * movement_direction
 	global_position = actual_position.round()
 
 func fire_at(target: Area2D):

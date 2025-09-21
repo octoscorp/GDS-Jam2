@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://dw3dl3w20jerv"]
 
-[ext_resource type="Texture2D" uid="uid://dyk2k6f50xn6n" path="res://media/icon.svg" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://bhd1fdthfwhap" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://11nlp0hher8q" path="res://media/player.png" id="2_g2els"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
-size = Vector2(32, 32)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
+radius = 6.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
 radius = 100.0
@@ -13,11 +13,11 @@ radius = 100.0
 script = ExtResource("1_g2els")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("1_3vyb7")
+position = Vector2(2, 0)
+texture = ExtResource("2_g2els")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_g2els")
+shape = SubResource("CapsuleShape2D_qhqgy")
 
 [node name="Range" type="Area2D" parent="."]
 collision_layer = 2

@@ -19,6 +19,7 @@ func _ready():
 		probs_end = 1
 
 func uptick_difficulty():
+	$Timer.wait_time *= 0.99
 	if probs_start == probs_end:
 		# Can't change probs any more
 		return
@@ -42,6 +43,8 @@ func spawn():
 			mob_spawn_location.progress_ratio = randf()
 			mob.position = mob_spawn_location.global_position
 			mob.enemy_died.connect(_on_enemy_died)
+			if Glob.ENEMY_TARGETS_ENEMY:
+				mob.add_to_group("enemy_targets")
 			$"../..".add_child(mob)
 
 func _on_enemy_died(location: Vector2):
@@ -54,6 +57,6 @@ func _cb_enemy_died(location:Vector2):
 func _on_timer_timeout() -> void:
 	spawn()
 	count += 1
-	if count == 20:
+	if count == 100:
 		uptick_difficulty()
 		count = 0

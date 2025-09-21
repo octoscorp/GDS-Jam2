@@ -4,12 +4,24 @@ const CHEST = preload("res://scenes/chest.tscn")
 const LUCK_MAX = 99
 const XP_THRESHOLD_INCREASE = 1.2
 
+@onready var music_player: AudioStreamPlayer = $MusicPlayer
+
+var songs = [
+	preload("res://media/music/The Robots Are Taking Over.mp3"),
+	preload("res://media/music/The Highwaymans Bell Tolls.mp3"),
+]
+var current_song = 0
+
 var xp_threshold = 4
 var experience_counter = 0
 var luck_value = 0
 
 func _ready():
 	reroll_luck_value()
+	music_player.stream = songs[current_song]
+	music_player.volume_db = -15
+	music_player.play()
+	Scores.current_score = 0
 	
 func reroll_luck_value():
 	luck_value = randi() % (LUCK_MAX + 1)
@@ -35,7 +47,6 @@ func on_card_choice_end():
 	var selected_card = choice_ui.choice_made_callback()
 	choice_ui.hide()
 	get_tree().paused = false
-	print("Adding card")
 	self.call_deferred("add_child", selected_card)
 	choice_ui.call_deferred("queue_free")
 
@@ -48,3 +59,11 @@ func _on_enemy_died(location: Vector2):
 	var chest = CHEST.instantiate()
 	chest.global_position = location
 	get_tree().root.add_child(chest)
+
+func _on_music_player_finished() -> void:
+	current_song = (current_song + 1) % songs.size()
+	music_player.stream = songs[current_song]
+	music_player.play()
+
+func _on_player_player_damaged() -> void:
+	get_tree().change_scene_to_file("res://scenes/end_score.tscn")

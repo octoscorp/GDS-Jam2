@@ -1,0 +1,177 @@
+[gd_scene load_steps=9 format=3 uid="uid://bchb8r7keof4p"]
+
+[ext_resource type="Script" uid="uid://byqum4ov4qlfm" path="res://scripts/end_score.gd" id="1_8hj4y"]
+[ext_resource type="Texture2D" uid="uid://duyqobwmjoaj" path="res://media/desert_bg.png" id="2_1cynk"]
+[ext_resource type="Texture2D" uid="uid://cu422cxovac07" path="res://media/cactus.png" id="3_o1hlh"]
+[ext_resource type="Texture2D" uid="uid://dpyikh25ie3h6" path="res://media/bullet.png" id="4_ln637"]
+[ext_resource type="Texture2D" uid="uid://11nlp0hher8q" path="res://media/player.png" id="5_5135g"]
+[ext_resource type="Texture2D" uid="uid://d2s6rruf2ty82" path="res://media/chest.png" id="6_huy33"]
+[ext_resource type="Texture2D" uid="uid://d5nq2ub05vr" path="res://media/CaptainZombie.png" id="7_8yshu"]
+[ext_resource type="FontFile" uid="uid://k5pg2ufuduyu" path="res://media/fonts/m5x7.ttf" id="8_2wtt8"]
+
+[node name="EndScore" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8hj4y")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_1cynk")
+
+[node name="Cactus5" type="Sprite2D" parent="Background"]
+position = Vector2(30, 325)
+texture = ExtResource("3_o1hlh")
+
+[node name="Cactus4" type="Sprite2D" parent="Background"]
+position = Vector2(437, 207)
+texture = ExtResource("3_o1hlh")
+
+[node name="Bullet" type="Sprite2D" parent="Background"]
+position = Vector2(136, 245)
+texture = ExtResource("4_ln637")
+
+[node name="Cactus" type="Sprite2D" parent="Background"]
+position = Vector2(73, 123)
+texture = ExtResource("3_o1hlh")
+
+[node name="Cactus2" type="Sprite2D" parent="Background"]
+position = Vector2(511, 306)
+texture = ExtResource("3_o1hlh")
+
+[node name="Player" type="Sprite2D" parent="Background"]
+position = Vector2(188, 291)
+texture = ExtResource("5_5135g")
+
+[node name="Chest" type="Sprite2D" parent="Background"]
+position = Vector2(523, 69)
+texture = ExtResource("6_huy33")
+
+[node name="CaptainZombie" type="Sprite2D" parent="Background"]
+position = Vector2(125, 216)
+texture = ExtResource("7_8yshu")
+
+[node name="CaptainZombie2" type="Sprite2D" parent="Background"]
+position = Vector2(552, 139)
+texture = ExtResource("7_8yshu")
+
+[node name="Cactus3" type="Sprite2D" parent="Background"]
+position = Vector2(198, 58)
+texture = ExtResource("3_o1hlh")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 202.0
+offset_right = -202.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.122252, 0.122252, 0.122252, 1)
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -291.0
+offset_right = -161.0
+offset_bottom = 25.375
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_2wtt8")
+theme_override_font_sizes/font_size = 32
+text = "HIGH SCORES"
+
+[node name="PlayAgain" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -40.0
+offset_right = 48.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("8_2wtt8")
+theme_override_font_sizes/font_size = 16
+text = "Play Again?"
+icon_alignment = 1
+
+[node name="ScoreEntry" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 320.0
+offset_top = 180.0
+offset_right = -320.0
+offset_bottom = -180.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="ScoreEntry"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -102.0
+offset_top = -21.0
+offset_right = 102.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.493545, 0.493546, 0.493546, 1)
+
+[node name="LineEdit" type="LineEdit" parent="ScoreEntry"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -99.0
+offset_top = -15.0
+offset_right = 33.0
+offset_bottom = 6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_2wtt8")
+theme_override_font_sizes/font_size = 16
+placeholder_text = "Enter Name"
+
+[node name="Label" type="Label" parent="ScoreEntry"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = -11.0
+offset_right = 92.0
+offset_bottom = 3.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_2wtt8")
+text = "Score"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="ScoreEntry"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 9.0
+offset_right = 25.0
+offset_bottom = 30.0
+theme_override_fonts/font = ExtResource("8_2wtt8")
+text = "Submit"
+
+[connection signal="button_up" from="ColorRect/PlayAgain" to="." method="_on_play_again_button_up"]
+[connection signal="button_up" from="ScoreEntry/Button" to="." method="_on_button_button_up"]

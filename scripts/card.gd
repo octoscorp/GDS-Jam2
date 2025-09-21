@@ -52,8 +52,17 @@ enum ID {
 const allowed_count = {
 	ID.PLAYER_PROJECTILE_SPEED_10: 2,
 	ID.PLAYER_PROJECTILE_SPEED_10_NEGATIVE: 3,
-	ID.ENEMY_PROJECTILE_SPEED_10: 2,
-	ID.ENEMY_PROJECTILE_SPEED_10_NEGATIVE: 3,
+	#ID.ENEMY_PROJECTILE_SPEED_10: 2,
+	#ID.ENEMY_PROJECTILE_SPEED_10_NEGATIVE: 3,
+	
+	# Not implemented
+	ID.ENEMY_PROJECTILE_SPEED_10: 0,
+	ID.ENEMY_PROJECTILE_SPEED_10_NEGATIVE: 0,
+	ID.ENEMY_PROJECTILE_PIERCE_BUT_FF: 0,
+	ID.ENEMY_PROJECTILE_BOUNCE_1: 0,
+	ID.ENEMY_PROJECTILE_HOMING: 0,
+	ID.PLAYER_PROJECTILE_HOMING: 0,
+	ID.PLAYER_PROJECTILE_BOUNCE_1: 0,
 }
 
 # Percentage chance that a given luck value falls within the bounds
@@ -220,16 +229,6 @@ var is_active: bool = false
 
 static func get_random_card_id():
 	return randi() % ID.size()
-
-static func no_more_allowed(id_to_use):
-	# TODO: count nodes in group
-	var count_in_play = 0
-	var allowed = 1
-	if id_to_use in allowed_count.keys():
-		allowed = allowed_count[id_to_use]
-	if count_in_play < allowed:
-		return false
-	return true
 
 static func create_from_id(id_to_use: Card.ID):
 	var output = preload("res://scenes/cards/card.tscn").instantiate()
