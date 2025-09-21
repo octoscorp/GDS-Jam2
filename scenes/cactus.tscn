@@ -12,6 +12,8 @@ radius = 80.0
 
 [node name="Cactus" type="Area2D" groups=["hurts_player", "player_targets"]]
 script = ExtResource("1_3uwn4")
+health = 20
+score_val = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_md0e3")

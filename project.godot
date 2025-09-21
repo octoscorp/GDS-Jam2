@@ -18,6 +18,7 @@ config/icon="res://media/icon.svg"
 [autoload]
 
 Glob="*res://scripts/globals/card_modifiers.gd"
+Scores="*res://scripts/globals/scores.gd"
 
 [display]
 

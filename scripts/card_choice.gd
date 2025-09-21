@@ -19,13 +19,26 @@ func _ready():
 	connect("card_choice_made", level.on_card_choice_end)
 	thread.wait_to_finish()
 
+func no_more_allowed(id_to_use):
+	# TODO: count nodes in group
+	var count_in_play = 0
+	for card in get_tree().get_nodes_in_group("is_card"):
+		if card.card_id == id_to_use:
+			count_in_play += 1
+	var allowed = 1
+	if id_to_use in Card.allowed_count.keys():
+		allowed = Card.allowed_count[id_to_use]
+	if count_in_play < allowed:
+		return false
+	return true
+
 func choose_3_cards():
 	cards = []
 	var i = 0
 	while cards.size() < 3 and i < 30:
 		i += 1
 		var card_id = Card.get_random_card_id()
-		if (Card.no_more_allowed(card_id)):
+		if (no_more_allowed(card_id)):
 			continue
 		cards.append(Card.create_from_id(card_id))
 	call_deferred("display_card_options")

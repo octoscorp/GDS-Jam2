@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://xgl783xyn1c0"]
+[gd_scene load_steps=8 format=3 uid="uid://xgl783xyn1c0"]
 
 [ext_resource type="Script" uid="uid://b861pkv8fvbxq" path="res://scripts/level.gd" id="1_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://dw3dl3w20jerv" path="res://scenes/player.tscn" id="1_w7c3h"]
 [ext_resource type="PackedScene" uid="uid://i8kxqxd1vr4a" path="res://scenes/hud.tscn" id="2_w8frs"]
 [ext_resource type="Script" uid="uid://bnjugbeilnyud" path="res://scripts/mob_spawning.gd" id="3_w8frs"]
+[ext_resource type="Texture2D" uid="uid://duyqobwmjoaj" path="res://media/desert_bg.png" id="5_ppgk2"]
+[ext_resource type="AudioStream" uid="uid://cf4lcnqexo0mp" path="res://media/music/The Robots Are Taking Over.mp3" id="6_2r41h"]
 
 [sub_resource type="Curve2D" id="Curve2D_mx8sn"]
 _data = {
@@ -37,12 +39,28 @@ position = Vector2(704, -64)
 rotation = 1.5708
 
 [node name="Timer" type="Timer" parent="PlayerCamera/SpawningPath"]
+wait_time = 4.0
 autostart = true
 
 [node name="LuckRerollTimer" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
 
-[connection signal="luck_value_changed" from="." to="." method="_on_luck_value_changed"]
+[node name="Background" type="TextureRect" parent="." groups=["player_scrolled_background"]]
+z_index = -10
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("5_ppgk2")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("6_2r41h")
+
+[connection signal="player_damaged" from="Player" to="." method="_on_player_player_damaged"]
 [connection signal="timeout" from="PlayerCamera/SpawningPath/Timer" to="PlayerCamera/SpawningPath" method="_on_timer_timeout"]
 [connection signal="timeout" from="LuckRerollTimer" to="." method="_on_luck_reroll_timer_timeout"]
+[connection signal="finished" from="MusicPlayer" to="." method="_on_music_player_finished"]
